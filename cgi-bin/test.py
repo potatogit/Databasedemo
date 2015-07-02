@@ -1,14 +1,18 @@
+#!/usr/local/bin/python3
+#上面不能没有
+
 import sqlite3,string,cgi,random
 
 connector= sqlite3.connect("test.db")
 cursor=connector.cursor()
+
 cursor.execute("create table if not exists People(name text,tel text)")
 
 form =cgi.FieldStorage()
 if "name" in form :
-  cursor.execute("insert into Pelple values(?,?)",(form["name"].value,form["tel"].value))
-print "Content-Type: text/html/n",
-print "<html><body>",
+  cursor.execute("insert into People values(?,?)",(form["name"].value,form["tel"].value))
+print ("Content-Type: text/html\n")
+print ("<html><body>")
 cursor.execute("select * from People")
 results= cursor.fetchall()
 for row in results:
@@ -21,6 +25,6 @@ print ('</form>')
 print ('</body></html>')
 
 
-cursor.close();
-connector.commit();
-connector.close();
+cursor.close()
+connector.commit()
+connector.close()
